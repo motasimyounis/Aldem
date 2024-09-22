@@ -28,7 +28,7 @@ from django.utils.translation import gettext_lazy as _
 SECRET_KEY = 'django-insecure-op)%sbz31qyw_$-s1fia=af(4ipl@vpjl+6-eo54vnt&v!qz10'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
