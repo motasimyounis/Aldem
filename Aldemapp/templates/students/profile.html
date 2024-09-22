@@ -1,0 +1,55 @@
+{% extends "students/base-s.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<section class="user-profile" style="direction: rtl;">
+
+   <h1 class="heading">ملفك الشخصي</h1>
+
+   <div class="info">
+
+      <div class="user">
+         <img src="{% static 'assets/images/pic-1.png' %}" alt="">
+         <h3>{{ user.username }}</h3>
+         <p>{{ user.email }}</p>
+         <a href="/change_password/" class="inline-btn">تغيير كلمة السر</a>
+      </div>
+
+      {% if messages %}
+        <div id="django-messages" style="display: none;">
+            {% for message in messages %}
+                <span class="message" data-tags="{{ message.tags }}">{{ message }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Your page content goes here -->
+
+    <!-- Add your JavaScript files here -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var messages = document.querySelectorAll('#django-messages .message');
+            if (messages.length > 0) {
+                messages.forEach(function(message) {
+                    alert(message.textContent);
+                });
+            }
+        });
+    </script>
+   </div>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</section>
+
+
+
+
+
+
+{% endblock content %}

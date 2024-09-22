@@ -1,0 +1,136 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>أ . الدمرداش | منصة تعليمية  رائدة</title>
+  <meta content=" الأستاذة الدمرداش متميزة في مجال التعليم العالي مختصة في تدريس مواد مختلفة بكفاءة وجودة عالية ومختصة بطلاب الجامعات" name="description">  
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/logo/logo (2).png' %}" rel="icon">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<!-- Icon Font Stylesheet -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <!-- Variables CSS Files. -->
+  <link href="{% static 'assets/css/variables.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+<!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+
+<!-- Demo styles -->
+</head>
+<body>
+   <!-- ======= Header ======= -->
+   <header id="header" class="header fixed-top" data-scrollto-offset="0">
+    <div class="container-fluid d-flex align-items-center justify-content-around">
+
+
+      <nav id="navbar" class="navbar">
+        <ul>
+
+          
+          <li><a class="nav-link scrollto " href="/">الرئيسية</a></li>
+          
+          <li><a class="nav-link scrollto" href="/#Identity" >نبذة عنا</a></li>
+          <li><a class="nav-link scrollto" href="/#services"> المساقات</a></li>
+          <li><a class="nav-link scrollto" href="/pakages"> الباقات و الخصومات</a></li>
+          <li><a class="nav-link scrollto" href="/exper" >المحاضرات التجريبية</a></li>
+          <li><a class="nav-link scrollto" href="/contact">إتصل بنا</a></li>
+          {% if not request.user.is_authenticated %}
+          <li><a class="nav-button" href="{% url 'login' %}"><button class="btn white-btn">تسجيل دخول</button></a></li>
+          <li> <a class="nav-button" href="{% url 'signup' %}"><button class="btn white-btn">تسجيل  حساب</button></a></li>
+          {% else %}
+          <li> <a class="nav-button" href="{% url 'student' %}"><button class="btn white-btn">الحساب الشخصي</button></a></li>
+        {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle d-none color-white"></i>
+      </nav>
+      
+
+    </div>
+  </header>
+
+
+
+
+  {% block content %}
+  
+  
+
+
+  {% endblock content %}
+
+
+  
+ <!-- ======= Footer ======= -->
+ <footer id="footer" class="footer">
+    
+
+  <div class="footer-legal text-center">
+    <div class="container">
+      
+      <div class="row">
+
+         
+<br>
+    <div class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center">
+   
+      <div class="d-flex flex-column align-items-center align-items-lg-start">
+        <div class="copyright">
+           حقوق النشر <strong><span style="color:#f0630b">ALDEMERDASH </span> . </strong> جميع الحقوق &copy;  محفوظة {% now 'Y' %} . 
+        </div>
+      </div>
+
+      <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
+          <a href="https://x.com/9BctEWQyVUaVe2G?t=z8Xp45GLj2TJzeFlINWSNg&s=09" class="twitter" target="_blank"><i class="bi bi-twitter"></i></a>
+          <a href="https://www.facebook.com/share/HfYkcX1WaKq2WbRc/?mibextid=qi2Omg" class="facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/al_demerdash12?igsh=MXNyMjJleWwxc3BiOQ==" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+          <a href="https://m.youtube.com/@s_aldemerdash?si=eHgABIOkIah0dmGc&fbclid=PAZXh0bgNhZW0CMTEAAaYpRCT8fzoR8-crW6UwfXL8hlYx-S2d8ba8OIvskjcvJ9NxH10J1l7Ehu4_aem_yEaD0zdc7XFA_Vr30UYnIQ" class="youtube"><i class="bi bi-youtube" target="_blank"></i></a>
+          <a href="https://www.snapchat.com/add/glamiiizxv?share_id=2XhHtTYgM7E&locale=ar-SA" class="snapchat"><i class="bi bi-snapchat" target="_blank"></i></a>
+          <a href="https://t.me/AL_Demerdash12" class="linkedin"><i class="bi bi-telegram" target="_blank"></i></a>
+      </div>
+
+    </div>
+  </div>
+
+</footer><!-- End Footer -->
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  {% comment %} <div id="preloader"></div> {% endcomment %}
+  <!-- Vendor JS Files -->
+   
+  <script type="text/javascript" src="{% static 'assets/js/particles.js' %}"></script>
+  <script type="text/javascript" src="{% static 'assets/js/app.js' %}"></script>
+  <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+ {% block text %}
+  
+ {% endblock text %}
+
+</body>
+</html>

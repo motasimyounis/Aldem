@@ -1,0 +1,157 @@
+{% extends 'base-ar.html' %}
+{% load static %}
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    
+    <!-- Include Bootstrap Multiselect CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css">
+    <script src="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js"></script>
+{% block content %}
+{% load crispy_forms_tags %}
+
+{% load widget_tweaks %}
+
+<section id="hero-animated" class="hero-animated d-flex align-items-center">
+  <div class="overlay" id="particles-js"></div>
+  <div class="container d-flex justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
+      <div class="wrapper">
+          <div class="form-box">
+              <div class="login-container" id="login">
+                  <div class="top">
+                      <span>هل لديك  حساب ؟ <a href="{% url 'login' %}">تسجيل دخول</a></span>
+                  </div>
+                  
+                  <form method="POST" action="{% url 'signup' %}">
+                    {% csrf_token %}
+
+
+                  
+                <div class="two-forms">
+                  <input type="hidden" id="device_id" name="device_id">
+                    <div class="input-box">
+                      {{form.username}}
+                        <i class="bx bx-user"></i>
+                    </div>
+                    <div class="input-box">
+                      {{form.phone_number}}
+                        <i class="bx bx-user"></i>
+                    </div>
+                   
+                </div>
+                <br>
+                <div class="input-box">
+                  {{form.email}}
+                  <i class="bx bx-user"></i>
+                </div>
+                    
+                    {% comment %} <div class="input-box">
+                      {{form.student_type}}
+                  </div> {% endcomment %}
+                 
+                <br>
+                <div class="two-forms">
+                  <div class="input-box">
+                    {{form.university_name}}
+                      <i class="bx bx-user"></i>
+                  </div>
+                  <div class="input-box">
+                    
+                    {{form.package}}
+                </div>
+                <div class="input-box" style="position: relative; display: inline-block;">
+                  {{form.subjects}}
+                  <span class="tooltip-text"> إذا أردت اختيار أكثر من مادة اضغط crtl   وثم اختر ب الماوس   على المادة التي تريدها . ويجب أن يبقى اسم المادة محدد باللون الأزرق</span>
+              </div>
+                </div>
+              <br> 
+            <div class="two-forms">
+                <div class="input-box" >
+                  {{form.password1}}
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                  {{form.password2}}
+                    <i class="bx bx-user"></i>
+                </div>
+            </div>
+              <br>
+              <div class="input-box">
+                        <input type="submit" class="submit" value="تسجيل حساب">
+                    </div>
+                </form>
+                <div class="two-col">
+                  <div class="two">
+                      <label>*  تنويه عند تسجيل الحساب سوف يتم حفظ هذا  الجهاز والمتصفح فقط في عمليات الدخول للحساب .</label>
+                  </div>
+              </div>  
+              </div>
+              
+              {% if form.errors %}
+              <div class="alert alert-danger">
+                {% for field in form %}
+                  {% for error in field.errors %}
+                    {{ error }}
+                    <br>
+                  {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                  {{ error }}
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+      </div>
+  </div>
+</section>
+<style>
+ .input-field {
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #cf6c2e;
+    height: 50px;
+    width: 100%;
+    padding: 0 10px 0 45px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    transition: .2s ease;
+}
+
+  /* Style the tooltip text */
+  .tooltip-text {
+      visibility: hidden;
+      width: 160px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 100%; /* Position the tooltip above the input field */
+      left: 50%;
+      margin-left: -80px; /* Use negative margin to center the tooltip */
+      opacity: 0;
+      transition: opacity 0.3s;
+  }
+  
+  /* Show the tooltip text when hovering over the input box */
+  .input-box:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+  }
+
+</style>
+
+
+
+
+
+
+
+
+{% endblock content %}
+

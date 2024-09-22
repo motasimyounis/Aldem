@@ -1,0 +1,154 @@
+{% extends "students/base-s.html" %}
+{% load static %}
+{% block content %}
+
+<section class="watch-video" style="direction: rtl;">
+
+   <div class="video-container" style="position: relative;">
+      <!-- Watermark to discourage screen recording -->
+      <div class="watermark" style="position: absolute; top: 10px; left: 10px; opacity: 0.5; z-index: 9999; font-size: 12px; color: rgba(255, 255, 255, 0.8);">
+         User: {{ user.email }} | Session ID: {{ user.session_id }}
+      </div>
+
+      <!-- Video element -->
+      <div class="video">
+         <video src="{{ video.video_file.url }}" controls poster="" id="video" controls disablePictureInPicture controlsList="nodownload noremoteplayback"></video>
+
+      </div>
+      
+      <h1 class="heading"> وصف الفيديو </h1>
+
+      <h3 class="title">{{ video.title }}</h3>
+
+      <p class="description">
+        {{ video.description }}
+
+      </p>
+ 
+    <br><br>
+    {% comment %} <iframe src="https://docs.google.com/viewer?url={{pdf_url}}&embedded=true" style="border : 8px solid;" width="100%" height="600px"></iframe> {% endcomment %}
+<hr>
+
+    <h1 class="heading">الملف الخاص بالمادة</h1>
+
+
+   <iframe 
+    src="{{pdf_url}}/preview"
+    id="pdfViewer"
+    width="100%" 
+    height="600px"></iframe>
+
+    {% comment %} <iframe style="-webkit-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;"
+        src="{% url 'serve_pdf_no_download' video.subject.id %}#toolbar=0" id="pdfViewer" width="100%" height="600px" type="application/pdf"></iframe>
+         {% endcomment %}
+
+</section>
+
+
+
+<style>
+    /* Prevent text selection */
+
+    
+    /* Prevent dragging images or iframes */
+    img, iframe {
+        -webkit-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+    }
+</style>
+
+<!-- Add the necessary JavaScript for deterrence -->
+<script>
+    // Fullscreen detection to prevent screen recording in fullscreen mode
+   document.addEventListener('fullscreenchange', function() {
+        if (document.fullscreenElement) {
+            alert('هذا الحد الأقصى لنافذة الفيديو');
+            document.exitFullscreen();  // Exit fullscreen mode
+        }
+    });
+
+    // Page visibility detection to pause the video when the user switches tabs
+   document.addEventListener('visibilitychange', function() {
+        const video = document.getElementById('video');
+        if (document.hidden) {
+            video.pause();  // Pause video if the user leaves the tab
+        }
+    });
+
+    // Optionally, you can also block right-click to discourage saving or downloading the video
+   document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();  // Disable right-click context menu
+        alert('لا يمكنك استخدام الزر الأيمن للماوس');
+    });
+    
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'PrintScreen') {
+            event.preventDefault();
+            alert('Screen capture is disabled.');
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey && e.key === 'p') || (e.ctrlKey && e.key === 's')) {
+            e.preventDefault();
+            alert('This action is disabled.');
+        }
+
+        if (e.keyCode === 123) {
+            e.preventDefault();
+            alert('F12 is disabled.');
+        }
+        
+    }, false);
+
+
+</script>
+
+
+<script>
+    let iframeFocused = false;
+
+    // Detect when the iframe is clicked or focused (mouse enters the iframe)
+    document.getElementById('pdfViewer').addEventListener('mouseenter', function() {
+        iframeFocused = true;
+    });
+
+    // Detect when the mouse leaves the iframe (interaction with the iframe ends)
+    document.getElementById('pdfViewer').addEventListener('mouseleave', function() {
+        iframeFocused = false;
+    });
+
+    // Function to blur the content when the page/tab is left
+    function handlePageLeave() {
+        if (!iframeFocused) {
+            document.body.style.filter = "blur(50px)";
+        }
+    }
+
+    // Detect when the user switches to another tab or window (blur the page)
+    window.onblur = handlePageLeave;
+
+    // Detect when the mouse leaves the browser window (mouseleave event)
+    document.addEventListener('mouseleave', handlePageLeave);
+
+    // Restore the content when the window/tab regains focus (user returns to the tab)
+    window.onfocus = function() {
+        document.body.style.filter = "none";
+    };
+
+    // Restore content when mouse re-enters the window
+    document.addEventListener('mouseenter', function() {
+        document.body.style.filter = "none";
+    });
+
+
+
+</script>
+
+
+{% endblock %}

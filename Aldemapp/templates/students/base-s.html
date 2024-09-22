@@ -1,0 +1,125 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>أ . الدمرداش | منصة تعليمية رائدة</title>
+   <link href="{% static 'assets/img/logo/logo (2).png' %}" rel="icon">
+
+   <!-- font awesome cdn link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+   <!-- custom css file link  -->
+   <link href="{% static 'assets/css/style-stu.css' %}" rel="stylesheet">
+   
+
+</head>
+<body>
+
+
+{% if  request.user.is_authenticated %}
+<header class="header">
+   
+   <section class="flex">
+
+
+    
+      <div class="icons">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         {% comment %} <div id="search-btn" class="fas fa-search"></div> {% endcomment %}
+         <div id="user-btn" class="fas fa-user"></div>
+         <div id="toggle-btn" class="fas fa-sun"></div>
+      </div>
+
+      <div class="profile">
+         <img src="{% static 'assets/images/pic-1.png' %}" class="image" alt="">
+         <h3 class="name"> {{ user.username }}</h3>
+         <br>
+         <p class="role">{{ user.email }}</p>
+         <br>
+         <p class="role">طالب</p>
+         <a href="/profile" class="btn">الملف الشخصي</a>
+         <div class="flex-btn">
+            <a href="{% url 'logout' %}"class="option-btn" style="background-color:red;" >تسجيل خروج</a>
+         </div>
+      </div>
+
+   </section>
+
+</header>   
+{% endif %}
+{% if  request.user.is_authenticated %}
+
+<div class="side-bar"style="direction: rtl;">
+   <div id="close-btn">
+      <i class="fas fa-times"></i>
+   </div>
+   <div class="profile">
+      <img src="{% static 'assets/img/logo/logo.jpg' %}" class="image" alt="">
+      <h3 class="name"> {{ user.username }}</h3>
+      <br>
+      <p class="role">{{ user.email }}</p>
+      <br>
+      <p class="role">طالب</p>
+      <a href="/profile" class="btn">الملف الشخصي</a>
+   </div>
+   <nav class="navbar">
+      <a href="/"><i class="fas fa-home"></i><span> الصفحة الرئيسية</span></a>
+      <a href="/student"><i class="fas fa-graduation-cap"></i><span> المساقات</span></a>
+      <a href="/contact"><i class="fas fa-headset"></i><span>  تواصل مع الأستاذة </span></a>
+   </nav>
+
+</div>
+
+
+   {% endif %}
+
+
+
+{% block content %}
+
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="footer" style="direction: rtl;">
+
+    <div class="d-flex flex-column align-items-center align-items-lg-start">
+        <div class="copyright" >
+         {% if not request.user.is_authenticated %}
+         <a style="margin-left:350px" href="/"><i class="fas fa-home"></i><span> الصفحة الرئيسية</span></a>
+         {% endif %}
+
+           حقوق النشر <strong><span style="color:#f0630b">ALDEMERDASH</span></strong> جميع الحقوق &copy; محفوظة.
+         </div>
+
+        
+      </div> 
+ </footer>
+ 
+ <!-- custom js file link  -->
+ <script src="{% static 'assets/js/script.js' %}"></script>
+
+ 
+    
+ </body>
+ </html>
