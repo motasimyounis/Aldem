@@ -1,0 +1,67 @@
+{% extends "students/base-s.html" %}
+{% load static %}
+{% block content %}
+
+
+
+
+
+
+
+
+{% if messages %}
+<div id="django-messages" style="display: none;">
+    {% for message in messages %}
+        <span class="message" data-tags="{{ message.tags }}">{{ message }}</span>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Your page content goes here -->
+
+<!-- Add your JavaScript files here -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var messages = document.querySelectorAll('#django-messages .message');
+    if (messages.length > 0) {
+        messages.forEach(function(message) {
+            alert(message.textContent);
+        });
+    }
+});
+</script>
+
+
+
+
+
+
+
+<section class="contact" style="direction: rtl;">
+
+   <div class="row">
+
+      <div class="image">
+         <img src="{% static 'assets/images/contact-img.svg' %}" alt="">
+      </div>
+                
+    
+
+      <form method="POST">
+         {% csrf_token %}
+         <h3> تواصل معنا </h3>
+        {{form.email}}
+        {{form.phone_number}}
+        {{form.msg}}
+         
+         <input type="submit" value="أرسل الرسالة" class="inline-btn" name="submit">
+      </form>
+
+   </div>
+
+  
+</section>
+
+
+
+{% endblock content %}

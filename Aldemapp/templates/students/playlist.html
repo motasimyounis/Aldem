@@ -1,0 +1,72 @@
+{% extends "students/base-s.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+{% if user.is_paid %}
+
+<section class="playlist-details" style="direction: rtl;">
+
+   <h1 class="heading">تفاصيل قائمة التشغيل</h1>
+
+
+   <div class="row">
+
+      <div class="column">
+         <div class="thumb">
+            <img src="{% static 'assets/images/thumb-1.png' %}" alt="">
+            <span>{{ lists.videos.count }} مقاطع</span>
+         </div>
+      </div>
+      <div class="column">
+   
+         <div class="details">
+            <h3>{{lists.name}}</h3>
+            <p>{{lists.description}}</p>
+         </div>
+      </div>
+   </div>
+
+</section>
+{% endif %}
+
+
+<section class="playlist-videos" style="direction: rtl;">
+
+   <h1 class="heading">المحاضرات</h1>
+
+   <div class="box-container">
+      {% for video in lists.videos.all %} 
+         <a class="box" href="{% url 'watch_video' video.id %}">
+            <i class="fas fa-play"></i>
+            <img src="{{ video.thumbnail.url }}" alt="">
+            <h3>{{ video.title }}</h3>
+         </a>
+         {% endfor %}
+   </div>
+
+</section>
+
+{% if messages %}
+<div id="django-messages" style="display: none;">
+    {% for message in messages %}
+        <span class="message" data-tags="{{ message.tags }}">{{ message }}</span>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+<script>
+   document.addEventListener('contextmenu', event => event.preventDefault());
+   document.addEventListener('keydown', event => {
+       if (event.key === 'PrintScreen') {
+           event.preventDefault();
+           alert('Screen capture is disabled');
+       }
+   });
+   
+
+</script>
+
+
+{% endblock content %}

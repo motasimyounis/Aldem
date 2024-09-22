@@ -1,0 +1,42 @@
+{% extends 'base-ar.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<section id="hero-animated" class="hero-animated d-flex align-items-center">
+    <div class="overlay" id="particles-js"></div>
+    <div class="container d-flex justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
+        <div class="wrapper">
+            <div class="form-box">
+                <div class="login-container" id="login">
+                    <div class="top">
+                        <header>سعدنا باشتراكك معنا </header>
+                        <header>سوف تصلك رسالة على إيميلك للحصول على كود خصم مميز خاص بك عند الدفع</header>
+                    </div>
+                 
+                        
+                        <br>
+                        
+                            <a class="nav-button" href="http://127.0.0.1:8000/admin/auth/user/"><button class="btn white-btn">الذهاب الى إيميلك</button></a>
+                        
+                        <br>
+                        
+
+            {% if messages %}
+            <div class="alert alert-info" role="alert">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

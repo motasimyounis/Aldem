@@ -1,0 +1,174 @@
+{% extends 'base-ar.html' %}
+{% block title %}تطوير وتصميم المواقع{% endblock title %}
+{% load static %}
+{% block content %}
+
+
+
+
+
+{% if messages %}
+<div id="django-messages" style="display: none;">
+    {% for message in messages %}
+        <span class="message" data-tags="{{ message.tags }}">{{ message }}</span>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Your page content goes here -->
+
+<!-- Add your JavaScript files here -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var messages = document.querySelectorAll('#django-messages .message');
+    if (messages.length > 0) {
+        messages.forEach(function(message) {
+            alert(message.textContent);
+        });
+    }
+});
+</script>
+
+
+
+
+
+<section id="hero-animated " class="hero-animated2 ">
+    <div class="content ">
+        <div class="container d-flex  justify-content-around align-items-center text-center position-relative" data-aos="zoom-out">
+            <div class="content justify-content-start">
+                <p class="color-white "> محاضراتنا التجريبة المجانية في جميع المواد التي ندرسها. </p>
+                    <div class="d-flex gap-3 justify-content-start">
+                        <div class="d-none d-lg-flex ms-2">
+                    </div>
+                </div>
+            </div>
+                <img src="{% static 'assets/img/head-img-services/exper.jpg' %}" class="img-fluid animated">
+            </div>
+        
+    </div>
+    
+    
+</section>
+
+<main id="main"> 
+
+      <!-- ======= Portfolio Section ======= -->
+      <section id="portfolio" class="portfolio" data-aos="fade-up">
+
+        <div class="container">
+  
+          <div class="section-header">
+            <h2>روابط المحاضرات التجريبية وأقسامها</h2>
+          <p>
+             شاهد محاضراتنا التجريبة <span style="color:#f0630b;"> المجانية</span> وكيفية شرح المواد  
+          </p>
+          <br>
+          <form action="{% url 'exper' %}" method="post" class="d-flex">
+            {% csrf_token %}
+            <input type="text" name="searched" placeholder="ابحث عن اسم المادة أو جزء منها" class="form-control me-2">
+            <button type="submit" class="btn btn-primary">ابحث</button>
+        </form>
+        <br>
+          </div>
+  
+        </div>
+ 
+  
+        <div class="container-fluid" data-aos="fade-up" data-aos-delay="200">
+  
+          <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order">
+            
+            <ul class="portfolio-flters">
+              <li data-filter="*" class="filter-active">الكل</li>
+              <li data-filter=".filter-counting">إحصاء</li>
+              <li data-filter=".filter-math">رياضيات</li>
+              <li data-filter=".filter-phsic">فيزياء</li>
+              <li data-filter=".filter-economy">إقتصاد</li>
+              <li data-filter=".filter-cimstry">كيمياء</li>
+              <li data-filter=".filter-etc">أخرى</li>
+            </ul><!-- End Portfolio Filters -->
+            <div class="row g-0 portfolio-container">
+
+              {% for expr in expr %}
+              {% if forloop.second %}
+              <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-app" dir="ltr">
+                <img src="{% static 'assets/img/head-img-services/ypp.jpg' %}" class="img-fluid" alt="" >
+                <div class="portfolio-info">
+                  <h4>{{expr.name}}</h4>
+                  <a href="{{expr.url}}" title="اضعط" target="_blank" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div><!-- End Portfolio Item -->
+
+              {% endif %}
+
+
+
+              {% if expr.type == "math" %}
+              <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-math" dir="ltr">
+                <img src="{% static 'assets/img/head-img-services/ypp.jpg' %}" class="img-fluid" alt="" >
+                <div class="portfolio-info">
+                  <h4>{{expr.name}}</h4>
+                  <a href="{{expr.url}}" title="اضعط" target="_blank" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div><!-- End Portfolio Item -->
+            
+               {% elif expr.type == "counting" %}
+               <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-counting" dir="ltr">
+                <img src="{% static 'assets/img/head-img-services/ypp.jpg' %}" class="img-fluid" alt="" >
+                <div class="portfolio-info">
+                  <h4>{{expr.name}}</h4>
+                  <a href="{{expr.url}}" title="اضعط" target="_blank" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div><!-- End Portfolio Item -->
+           
+            
+            {% elif expr.type == "phsic" %}
+            <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-phsic" dir="ltr">
+              <img src="{% static 'assets/img/head-img-services/ypp.jpg' %}" class="img-fluid" alt="" >
+              <div class="portfolio-info">
+                <h4>{{expr.name}}</h4>
+                <a href="{{expr.url}}" title="اضعط" target="_blank" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+          
+             {% elif expr.type == "economy" %}
+             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-economy" dir="ltr">
+              <img src="{% static 'assets/img/head-img-services/ypp.jpg' %}" class="img-fluid" alt="" >
+              <div class="portfolio-info">
+                <h4>{{expr.name}}</h4>
+                <a href="{{expr.url}}" title="اضعط" target="_blank" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+          {% elif expr.type == "cimstry" %}
+          <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-cimstry" dir="ltr">
+            <img src="{% static 'assets/img/head-img-services/ypp.jpg' %}" class="img-fluid" alt="" >
+            <div class="portfolio-info">
+              <h4>{{expr.name}}</h4>
+              <a href="{{expr.url}}" title="اضعط" target="_blank" class="details-link"><i class="bi bi-link-45deg"></i></a>
+            </div>
+          </div><!-- End Portfolio Item -->
+        {% else %}
+        <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item filter-etc" dir="ltr">
+          <img src="{% static 'assets/img/head-img-services/ypp.jpg' %}" class="img-fluid" alt="" >
+          <div class="portfolio-info">
+            <h4>{{expr.name}}</h4>
+            <a href="{{expr.url}}" title="اضعط" target="_blank" class="details-link"><i class="bi bi-link-45deg"></i></a>
+          </div>
+        </div><!-- End Portfolio Item -->
+
+          {% endif %}
+          {% endfor %}
+         
+          </div>
+  
+        </div>
+      </section><!-- End Portfolio Section -->
+
+
+    </section><!-- End Team Section -->
+    
+    
+    </main><!-- End #main -->
+{% endblock content %}

@@ -1,0 +1,93 @@
+{% extends 'base-ar.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+
+
+{% if messages %}
+<div id="django-messages" style="display: none;">
+    {% for message in messages %}
+        <span class="message" data-tags="{{ message.tags }}">{{ message }}</span>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Your page content goes here -->
+
+<!-- Add your JavaScript files here -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var messages = document.querySelectorAll('#django-messages .message');
+    if (messages.length > 0) {
+        messages.forEach(function(message) {
+            alert(message.textContent);
+        });
+    }
+});
+</script>
+
+
+
+
+<section id="hero-animated" class="hero-animated d-flex align-items-center">
+    <div class="overlay" id="particles-js"></div>
+    <div class="container d-flex justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
+        <div class="wrapper">
+            <div class="form-box">
+                <div class="login-container" id="login">
+                    <div class="top">
+                        <span>لا تمتلك حساب ؟ <a href="{% url 'signup' %}">تسجيل حساب</a></span>
+                        <header>أهلاً بعودتك</header>
+                    </div>
+                   
+                    <form method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <input type="hidden" id="device_id" name="device_id">
+                        <div class="input-box">
+                            {{form.username}}
+                            <i class="bx bx-user"></i>
+                        </div>
+                        <br>
+                        <div class="input-box">
+                            {{form.password}}
+                            <i class="bx bx-lock-alt"></i>
+                        </div>
+                        <br>
+                        <div class="input-box">
+                            <input type="submit" class="submit" value="تسجيل دخول">
+                        </div>
+                        <br>
+                        
+                    </form>
+                            
+            {% if messages %}
+            <div class="alert alert-info" role="alert">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
+<script>
+    const fpPromise = FingerprintJS.load();
+    fpPromise
+      .then(fp => fp.get())
+      .then(result => {
+          const deviceId = result.visitorId;
+          document.getElementById('device_id').value = deviceId;
+      });
+</script>
+
+
+{% endblock content %}

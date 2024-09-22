@@ -1,0 +1,27 @@
+{% extends "students/base-s.html" %}
+{% block content %}
+{% load static %}
+
+<section class="courses" style="direction: rtl;">
+   <h1 class="heading">المساقات</h1>
+   <div class="box-container"> 
+
+      
+       {% for subject in subjects %}
+      <div class="box">
+         <div class="thumb">
+            <img src="{% static 'assets/images/thumb-1.png' %}" alt="">
+         </div>
+        
+         <h3 class="title">{{ subject }}</h3>
+     
+         <a href=" {% url "playlist" subject.id %} " class="inline-btn">مشاهدة المحتوى</a> 
+      </div>
+     
+   {% endfor %}
+
+   </div>
+   
+  
+</section>
+{% endblock content %}

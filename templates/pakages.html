@@ -1,0 +1,68 @@
+{% extends 'base-ar.html' %}
+{% load static %}
+{% block content %}
+{% load markdown_extras %}
+
+
+
+<section id="hero-animated" class="hero-animated2" style="width:100%;height:100%">
+  <div class="overlay" id="particles-js"></div>
+
+   
+
+<section id="pricing" class="pricing">
+  <div class="container" data-aos="fade-up">
+    <div class="row gy-4">
+      <div class="container" data-aos="fade-up">
+        <div class="section-header">
+          <h2 style="font-size:50px;color:#f0630b;font-weight:bold;" >باقاتنا</h2>
+          <br>
+        <p style="color:white;"> 
+          تقدم لكم الأستاذة الدمرداش أفضل الباقات والاشتراكات والخصومات التي تساعد الطلاب على الاشتراك بسهولة والوصول الى أفضل الدرجات والنجاحات.
+        </p>
+        </div>
+        <div class="row gy-4">
+          
+          {% for pa in package %}
+         
+          <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+            <div class="pricing-item featured">
+              <div class="pricing-header">
+                <h3 class="font-title-buy">{{pa.name}}</h3>
+                <h4 style="color:white;"><span>  تبدأ من  </span><strong><sup></sup>{{pa.price}}</strong><span> ريال <span/></h4>
+              </div>
+              <ul style="text-align: right;">
+                
+                <li><i class="bi bi-dot"></i> <span> {{pa.points|markdown|safe }} </span></li>
+              </ul>
+              <div class="text-center mt-auto">
+                <a href="{% url "login" %}" class="buy-btn" target="_blank">إشترك الآن</a>
+              </div>
+            </div>
+          </div><!-- End Pricing Item -->
+          {% endfor %}
+
+
+
+        </div>
+        
+      </div>
+
+
+
+     
+    </div>
+  </div>
+</section><!-- End Pricing Section -->
+
+
+  </div>
+  
+  
+</section>
+
+
+
+
+  {% endblock content %}
+
