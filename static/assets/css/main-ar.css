@@ -1,0 +1,119 @@
+
+/* custom for ar - v  */
+@media (min-width: 1280px){
+  .navbar a i, .navbar a:focus i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 0;
+    margin-right: 5px;
+}
+}
+@font-face {
+  font-family: ar;
+  src: url(../font/Almarai-Regular.ttf);
+}
+body{
+font-family: ar !important;  
+}
+html{
+font-family: ar !important;  
+}
+
+.hero-animated .custom-n i {
+  margin-right: 5px;
+}
+.h-in-head{
+  text-align: right;
+  
+}
+.h-in-head span{
+  text-align:  left !important;
+
+}
+.section-header h2{
+  text-align: center;
+}
+.section-header p{
+  text-align: center;
+}
+.service-item h3{
+  text-align: center;
+}
+.service-item p{
+  text-align: center;
+}
+.pricing-header h3,h4,h6{
+  text-align: center !important;
+  font-family: ar;
+}
+.pricing-header p{
+  text-align: center;
+}
+h1,h2,h3,h4,h5,h6,p{
+  text-align: right;
+  font-family: ar;
+  
+}
+
+.team .img{
+  margin-bottom: 5px;
+}
+.onfocus ul {
+  text-align: right;
+}
+.footer .footer-content h4::after {
+  display: none;
+}
+.mr-55{
+  margin-right: 20px;
+}
+.stretched-link h3{
+  font-size:20px !important;
+}
+.team h1{
+  font-size: 30px;
+}
+
+.p1::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 53px;
+  background-color: #68BDA0;
+  right: 396px;
+  top: 2px;
+}
+
+.p2::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 53px;
+  background-color: #68BDA0;
+  right: 367px;
+  top: 2px;
+}
+
+.p2::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 53px;
+  background-color: #68BDA0;
+  right: 346px;
+  top: 2px;
+}
+.p1::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 53px;
+  background-color: #68BDA0;
+  right: 350px;
+  top: 2px;
+}
+
+.swiper-button-next, .swiper-ltr .swiper-button-prev {
+  right: var(--swiper-navigation-sides-offset,30px);
+  left: auto;
+}
