@@ -60,6 +60,18 @@
         -o-user-drag: none;
         user-drag: none;
     }
+
+    .hidden-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* طبقة شفافة تظهر فوق الفيديو */
+        z-index: 9999;
+        display: none; /* ستظهر فقط عند الكشف عن تسجيل الشاشة */
+    }
+    
 </style>
 
 <!-- Add the necessary JavaScript for deterrence -->
@@ -89,9 +101,11 @@
     document.addEventListener('keydown', function(event) {
         if (event.key === 'PrintScreen') {
             event.preventDefault();
+            document.querySelector('.hidden-layer').style.display = 'block';  // إظهار الطبقة الشفافة
             alert('Screen capture is disabled.');
         }
     });
+    
 
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey && e.key === 'p') || (e.ctrlKey && e.key === 's')) {
@@ -150,5 +164,45 @@
 
 </script>
 
+
+
+{% comment %} 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const videoElement = document.getElementById('video'); // العنصر الخاص بالفيديو
+    
+        videoElement.addEventListener('play', function() {
+            // دالة لفتح الفيديو في نافذة جديدة عند تشغيل الفيديو
+            openVideoInNewWindow(videoElement.src, {
+                userEmail: "{{ user.email }}",
+                sessionId: "{{ user.session_id }}"
+            });
+    
+            // إيقاف تشغيل الفيديو في النافذة الأصلية
+            videoElement.pause();
+        });
+    });
+    
+    // دالة لفتح الفيديو في نافذة جديدة مع تمرير بيانات الجلسة
+    function openVideoInNewWindow(videoUrl, sessionData) {
+        const newWindow = window.open(videoUrl, '_blank', 'width=800,height=600');
+        
+        // تمرير بيانات الجلسة للنافذة الجديدة
+        newWindow.sessionData = sessionData;
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.opener && window.opener.sessionData) {
+            const sessionData = window.opener.sessionData;
+            console.log("Session Data: ", sessionData);
+    
+            // يمكنك إظهار أو التعامل مع بيانات الجلسة في النافذة الجديدة هنا
+            document.querySelector('.session-info').innerText = `User: ${sessionData.userEmail}, Session ID: ${sessionData.sessionId}`;
+        }
+    });
+    alert('سيتم فتح الفيديو في نافذة جديدة.');
+    
+    
+</script>
+ {% endcomment %}
 
 {% endblock %}
