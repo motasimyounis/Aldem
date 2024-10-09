@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from decouple import config
-
+import django_heroku
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -64,6 +64,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     # 'Aldemapp.middleware.BlockChangeAfterFirstLoginMiddleware',
     
 
@@ -71,7 +73,7 @@ MIDDLEWARE = [
 ]
 
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/','http://localhost:8000/','https://aldem-1d6e563a8a5f.herokuapp.com/',]
 
 SECURE_FRAME_DENY = True
 X_FRAME_OPTIONS = 'DENY'
@@ -114,10 +116,10 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'aldemerdash',  # The name of your database on AWS RDS
+#         'NAME': 'database-aldeme',  # The name of your database on AWS RDS
 #         'USER': 'postgres',    # Your PostgreSQL username
-#         'PASSWORD': '6NX9w69Qf3x1rla0n9dR',  # Your PostgreSQL password
-#         'HOST': 'aldemerdash.cvqakkkcw67b.eu-west-2.rds.amazonaws.com',  # Your AWS RDS endpoint
+#         'PASSWORD': 'L3tAqH4phzpJLA4uYbVR',  # Your PostgreSQL password
+#         'HOST': 'database-aldeme.cts0gwgmadga.eu-west-2.rds.amazonaws.com',  # Your AWS RDS endpoint
 #         'PORT': '5432',  # The default PostgreSQL port
 #     },
 #     # 'OPTIONS': {
@@ -166,7 +168,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
-
 
 # django_heroku.settings(locals())
 
@@ -238,11 +239,10 @@ DEVICE_COOKIE_SAMESITE = 'Lax'  # Set to 'None', 'Lax', or 'Strict' based on you
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-
-# AWS Credentials and Bucket settings
+    
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = 'testvideoaldem'
+AWS_STORAGE_BUCKET_NAME = 'alldem'
 AWS_S3_REGION_NAME = 'eu-west-2'  # e.g. 'us-east-1'
 
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
@@ -258,15 +258,12 @@ AWS_S3_OBJECT_PARAMETERS = {
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 
-
-
 # CACHES = {
 #     'default': {
 #         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
 #         'LOCATION': '127.0.0.1:8000',
 #     }
 # }
-
 
 
 # MEDIA_URL = '/media/'
