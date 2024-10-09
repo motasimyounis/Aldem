@@ -1,6 +1,32 @@
 {% extends 'base-ar.html' %}
 {% block content %}
 {% load static %}
+
+
+
+{% if messages %}
+<div id="django-messages" style="display: none;">
+    {% for message in messages %}
+        <span class="message" data-tags="{{ message.tags }}">{{ message }}</span>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Your page content goes here -->
+
+<!-- Add your JavaScript files here -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var messages = document.querySelectorAll('#django-messages .message');
+    if (messages.length > 0) {
+        messages.forEach(function(message) {
+            alert(message.textContent);
+        });
+    }
+});
+</script>
+
+
   <section id="hero-animated " class="hero-animated d-flex align-items-center">
     <div class="overlay" id="particles-js"></div>
     <div class="container d-flex  justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
@@ -313,4 +339,5 @@
 </section><!-- End Services Section -->
 
     <br>
+    <br><br>
   {% endblock content %}
