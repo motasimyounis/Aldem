@@ -100,4 +100,3 @@ admin.site.register(User, CustomUserAdmin)
 admin.site.register(Profile)
 
 
-

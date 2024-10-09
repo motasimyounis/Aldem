@@ -39,7 +39,12 @@
       {% for video in lists.videos.all %} 
          <a class="box" href="{% url 'watch_video' video.id %}">
             <i class="fas fa-play"></i>
+         
+            {% if video.thumbnail.url != None %}
             <img src="{{ video.thumbnail.url }}" alt="">
+            {% else %}
+            <img src="" alt="غلاف">
+             {% endif %}
             <h3>{{ video.title }}</h3>
          </a>
          {% endfor %}
@@ -70,3 +75,4 @@
 
 
 {% endblock content %}
+>>>>>>> d6e359bc5dc38600e4f4bc1ad0fed06a530404b8

@@ -8,4 +8,3 @@ class AldemappConfig(AppConfig):
     
     def ready(self):
         import Aldemapp.signals
-    

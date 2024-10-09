@@ -1,4 +1,3 @@
-
 import markdown2
 from django import template
 

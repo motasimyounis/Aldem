@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .models import *
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import Package,Subject
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
@@ -14,13 +15,13 @@ from django.urls import reverse
 import httpagentparser
 from django.db import transaction
 import uuid
-import random 
+import random ,time
 import string
 from django.core.mail import send_mail
 
 
 def generate_code():
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+    return 'MTS'.join(random.choices(string.ascii_letters + string.digits, k=6))
 
 
 
@@ -77,12 +78,11 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             user.save()
-            device_id = str(uuid.uuid4())  # Generate a unique ID for the device
-           
+            device_id = str(uuid.uuid4())  # Generate a unique ID for the device 
             user.profile.device_id = device_id
             user.profile.save()
             login(request, user)
-            logout(request)
+            
         # Set the device ID in the browser's cookies
             confirmation_code = generate_code()
 
@@ -116,10 +116,8 @@ def register_view(request):
                 secure=False,  # False for localhost, True for HTTPS
                 samesite='Lax',  # Cross-site cookie handling
                 path='/'  # Accessible throughout the site
-            )
-
+            ) 
             return response # Redirect to a home page after registration
-    
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
@@ -221,11 +219,7 @@ def home_student(request):
 
 @login_required
 def profile(request):
-    # totalitem = 0
     user = request.user
-    # data_items = Data.objects.filter(pdf=0)
-    # totalitem = len(data_items)
-    # print(totalitem)
     sub_name = Subject.objects.all()
     return render(request,'students/profile.html',{sub_name:'sub_name'})
 
@@ -238,7 +232,7 @@ def contact(request):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, 'تم إرسال رسالتك وسيتم التواصل معك بأقرب وقت')
-            return redirect('contact')  # Redirect to a home page after registration
+            return redirect('/')  # Redirect to a home page after registration
     else:
         form = ContactForm()
     context = {
@@ -293,9 +287,6 @@ def watch(request, video_id):
 
 def pakages(request):
     package = Package.objects.all()
-
-    # pointslist = Package.objects.all()
-    # points_list = pointslist.points.split('\n')
     context = {
         'package':package,
        
