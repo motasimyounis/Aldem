@@ -82,7 +82,7 @@ def register_view(request):
             user.profile.device_id = device_id
             user.profile.save()
             login(request, user)
-            
+            logout(request)
         # Set the device ID in the browser's cookies
             confirmation_code = generate_code()
 

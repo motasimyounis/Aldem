@@ -34,6 +34,16 @@
 <!-- Link Swiper's CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YVPE7RZZ2Y"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YVPE7RZZ2Y');
+</script>
 
 <!-- Demo styles -->
 </head>
@@ -55,8 +65,8 @@
           <li><a class="nav-link scrollto" href="/exper" >المحاضرات التجريبية</a></li>
           <li><a class="nav-link scrollto" href="/contact">إتصل بنا</a></li>
           {% if not request.user.is_authenticated %}
-          <li><a class="nav-button" href="{% url 'login' %}"><button class="btn white-btn">تسجيل دخول</button></a></li>
-          <li> <a class="nav-button" href="{% url 'signup' %}"><button class="btn white-btn">تسجيل  حساب</button></a></li>
+          <li><a class="nav-button" href="{% url 'login' %}" style="padding: 10px 20px;"><button style="padding: 10px 20px;" class="btn white-btn">تسجيل دخول</button></a></li>
+          <li> <a class="nav-button" href="{% url 'signup' %}" style="padding: 10px 20px;"><button style="padding: 10px 20px;" class="btn white-btn">تسجيل  حساب</button></a></li>
           {% else %}
           <li> <a class="nav-button" href="{% url 'student' %}"><button class="btn white-btn">الحساب الشخصي</button></a></li>
         {% endif %}
@@ -99,13 +109,14 @@
         </div>
       </div>
 
+    
       <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
-          <a href="https://x.com/9BctEWQyVUaVe2G?t=z8Xp45GLj2TJzeFlINWSNg&s=09" class="twitter" target="_blank"><i class="bi bi-twitter"></i></a>
-          <a href="https://www.facebook.com/share/HfYkcX1WaKq2WbRc/?mibextid=qi2Omg" class="facebook" target="_blank"><i class="bi bi-facebook"></i></a>
-          <a href="https://www.instagram.com/al_demerdash12?igsh=MXNyMjJleWwxc3BiOQ==" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
-          <a href="https://m.youtube.com/@s_aldemerdash?si=eHgABIOkIah0dmGc&fbclid=PAZXh0bgNhZW0CMTEAAaYpRCT8fzoR8-crW6UwfXL8hlYx-S2d8ba8OIvskjcvJ9NxH10J1l7Ehu4_aem_yEaD0zdc7XFA_Vr30UYnIQ" class="youtube"><i class="bi bi-youtube" target="_blank"></i></a>
-          <a href="https://www.snapchat.com/add/glamiiizxv?share_id=2XhHtTYgM7E&locale=ar-SA" class="snapchat"><i class="bi bi-snapchat" target="_blank"></i></a>
-          <a href="https://t.me/AL_Demerdash12" class="linkedin"><i class="bi bi-telegram" target="_blank"></i></a>
+          <a href="https://x.com/9BctEWQyVUaVe2G?t=z8Xp45GLj2TJzeFlINWSNg&s=09"  class="twitter" target="_blank" title="تابعنا على تويتر"><i class="bi bi-twitter"></i></a>
+          <a href="https://www.facebook.com/share/HfYkcX1WaKq2WbRc/?mibextid=qi2Omg" class="facebook" target="_blank" title="تابعنا على الفيسبوك"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/al_demerdash12?igsh=MXNyMjJleWwxc3BiOQ==" class="instagram" target="_blank" title="تابعنا على الانستغرام"><i class="bi bi-instagram"></i></a>
+          <a href="https://m.youtube.com/@s_aldemerdash?si=eHgABIOkIah0dmGc&fbclid=PAZXh0bgNhZW0CMTEAAaYpRCT8fzoR8-crW6UwfXL8hlYx-S2d8ba8OIvskjcvJ9NxH10J1l7Ehu4_aem_yEaD0zdc7XFA_Vr30UYnIQ" class="youtube" title="تابعنا على اليوتيوب"><i class="bi bi-youtube" target="_blank"></i></a>
+          <a href="https://www.snapchat.com/add/glamiiizxv?share_id=2XhHtTYgM7E&locale=ar-SA" class="snapchat"><i class="bi bi-snapchat" target="_blank" title="تابعنا على سناب شات"></i></a>
+          <a href="https://t.me/AL_Demerdash12" class="linkedin"><i class="bi bi-telegram" target="_blank"title="تابعنا على التليغرام"></i></a>
       </div>
 
     </div>

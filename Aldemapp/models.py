@@ -11,8 +11,8 @@ from django.urls import reverse
 class Videos(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='videos')
     title = models.CharField(_("عنوان الفيديو"),max_length=255)
-    video_file = models.FileField(_("الفيديو"),blank=True,null=True,upload_to='videos/')
-    thumbnail = models.ImageField(_("غلاف المقطع"),upload_to='thumbnails/', blank=True, null=True)
+    video_file = models.FileField(_("الفيديو"),max_length=355,blank=True,null=True,upload_to='videos/')
+    thumbnail = models.ImageField(_("غلاف المقطع"),max_length=255,upload_to='thumbnails/', blank=True, null=True)
     description = models.TextField(_("وصف الفيديو"), blank=True, null=True)
 
     def __str__(self):

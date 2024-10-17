@@ -7,6 +7,7 @@
 
 <section class="playlist-details" style="direction: rtl;">
 
+
    <h1 class="heading">تفاصيل قائمة التشغيل</h1>
 
 
@@ -14,7 +15,11 @@
 
       <div class="column">
          <div class="thumb">
-            <img src="{% static 'assets/images/thumb-1.png' %}" alt="">
+         {% if lists.thumbnail %}
+            <img src="{{ lists.thumbnail.url }}" alt="">
+         {% else %}
+         <img src="{% static 'assets/img/head-img-services/main.jpg' %}" alt="Default Image">
+         {% endif %}
             <span>{{ lists.videos.count }} مقاطع</span>
          </div>
       </div>
@@ -43,7 +48,7 @@
             {% if video.thumbnail.url != None %}
             <img src="{{ video.thumbnail.url }}" alt="">
             {% else %}
-            <img src="" alt="غلاف">
+            <img src="{% static 'assets/img/head-img-services/main.jpg' %}" alt="غلاف">
              {% endif %}
             <h3>{{ video.title }}</h3>
          </a>
@@ -75,4 +80,3 @@
 
 
 {% endblock content %}
->>>>>>> d6e359bc5dc38600e4f4bc1ad0fed06a530404b8
