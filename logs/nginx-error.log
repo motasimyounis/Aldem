@@ -1853,3 +1853,4 @@
 2024/10/20 16:29:31 [error] 32677#32677: *17413 open() "/home/ubuntu/Aldem/favicon.ico" failed (13: Permission denied), client: 162.142.125.64, server: aldemerdash-teach.com, request: "GET /favicon.ico HTTP/1.1", host: "35.178.203.91"
 2024/10/20 17:30:33 [error] 32677#32677: *17702 open() "/home/ubuntu/Aldem/favicon.ico" failed (13: Permission denied), client: 162.142.125.64, server: aldemerdash-teach.com, request: "GET /favicon.ico HTTP/1.1", host: "35.178.203.91"
 2024/10/20 17:36:25 [error] 32677#32677: *18002 open() "/home/ubuntu/Aldem/favicon.ico" failed (13: Permission denied), client: 2.89.136.65, server: aldemerdash-teach.com, request: "GET /favicon.ico HTTP/1.1", host: "www.aldemerdash-teach.com"
+2024/10/20 18:29:45 [error] 32677#32677: *18575 open() "/home/ubuntu/Aldem/favicon.ico" failed (13: Permission denied), client: 162.142.125.64, server: aldemerdash-teach.com, request: "GET /favicon.ico HTTP/1.1", host: "35.178.203.91"
