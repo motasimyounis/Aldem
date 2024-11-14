@@ -26,7 +26,17 @@ admin.site.site_header = 'ALDEMERDASH'
 
 
 
-admin.site.register(Videos)
+
+class VideosAdmin(admin.ModelAdmin):
+    list_display= ('subject','title','order',)
+    list_editable= ['order']
+    search_fields = ['subject__name', 'title']
+
+
+
+admin.site.register(Videos,VideosAdmin)
+
+
 
 
 

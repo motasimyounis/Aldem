@@ -14,6 +14,7 @@ class Videos(models.Model):
     video_file = models.FileField(_("الفيديو"),max_length=355,blank=True,null=True,upload_to='videos/')
     thumbnail = models.ImageField(_("غلاف المقطع"),max_length=255,upload_to='thumbnails/', blank=True, null=True)
     description = models.TextField(_("وصف الفيديو"), blank=True, null=True)
+    order = models.PositiveIntegerField(_("ترتيب الفيديو"), default=0)
 
     def __str__(self):
         return f"{self.title} ({self.subject.name})"
@@ -21,6 +22,7 @@ class Videos(models.Model):
     class Meta:
         verbose_name = "فيديو"
         verbose_name_plural = "فيديوهات"
+        ordering = ['order']
 
 
 
