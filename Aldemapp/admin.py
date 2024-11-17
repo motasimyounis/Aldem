@@ -31,6 +31,7 @@ class VideosAdmin(admin.ModelAdmin):
     list_display= ('subject','title','order',)
     list_editable= ['order']
     search_fields = ['subject__name', 'title']
+    list_filter = ('subject','title')
 
 
 
