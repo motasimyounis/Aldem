@@ -113,7 +113,7 @@ def register_view(request):
                 device_id,  # Cookie value
                 max_age=365*24*60*60,  # 1 year expiration
                 httponly=True,  # Prevent JavaScript access
-                secure=False,  # False for localhost, True for HTTPS
+                secure=True,  # False for localhost, True for HTTPS
                 samesite='Lax',  # Cross-site cookie handling
                 path='/'  # Accessible throughout the site
             ) 
