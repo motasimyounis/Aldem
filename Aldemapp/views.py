@@ -83,6 +83,7 @@ def register_view(request):
             user.profile.save()
             login(request, user)
             logout(request)
+            
         # Set the device ID in the browser's cookies
             confirmation_code = generate_code()
 
@@ -93,8 +94,6 @@ def register_view(request):
                          
                 📧  **البريد الإلكتروني**: {user.email}    
                      
-                💼 **اسم الباقة**: {user.package.name}
-
                 🔑 **{confirmation_code}**
 
                 🌐 يمكنك زيارة الرابط التالي لمزيد من التفاصيل:
@@ -205,8 +204,7 @@ def custom_login(request):
 def home_student(request):
     user = request.user
     user = User.objects.get(username=user.username)
-    subjects = user.subjects.all()
-
+    subjects = user.subjects
     sub = Subject.objects.all()
     context = {
         'sub' : sub,
@@ -246,8 +244,16 @@ def contact(request):
 @login_required
 def playlist(request,list_id):
     lists = get_object_or_404(Subject, id=list_id)
+        # Check if the user is authenticated and assign the PDF URL
+    if request.user.is_authenticated:
+        pdf_url = lists.pdf if lists.pdf else None  # Use the `pdf` field directly as it's a CharField
+        print(pdf_url)
+    else:
+        pdf_url = None  # No PDF URL for unauthenticated users
+
     context = {
-        'lists' : lists
+        'lists' : lists,
+        'pdf_url': pdf_url,
     }
    
     return render(request,'students/playlist.html',context)
@@ -268,21 +274,12 @@ def watch(request, video_id):
     else:
         pdf_url = None  # Don't pass the PDF URL if the user isn't authenticated
 
-
-    
-    try:
-        context = {
+    context = {
         'video': video,
         'pdf_url': pdf_url,
-        
-        }
-        return render(request, 'students/watch-video.html', context)
-
-        
-    except Videos.DoesNotExist:
-        return JsonResponse({'error': 'Video not found'}, status=404)
-
-
+    }
+    
+    return render(request, 'students/watch-video.html', context)
 
 
 def pakages(request):

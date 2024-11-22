@@ -6,8 +6,9 @@ from django.contrib.auth.models import *
 
 
 class CustomUserCreationForm(UserCreationForm):
-    package = forms.ModelChoiceField(queryset=Package.objects.all(), required=True, label="الباقة",empty_label="اختر باقتك",)
-    subjects = forms.ModelMultipleChoiceField(queryset=Subject.objects.all(), required=True,widget=forms.SelectMultiple(attrs={'class': 'input-field','placeholder':'المواد', }))
+    # package = forms.ModelChoiceField(queryset=Package.objects.all(), required=True, label="الباقة",empty_label="اختر باقتك",)
+    # subjects = forms.ModelMultipleChoiceField(queryset=Subject.objects.all(), required=True,widget=forms.SelectMultiple(attrs={'class': 'input-field','placeholder':'المواد', }))
+    subjects = forms.ModelChoiceField(queryset=Subject.objects.all(), required=True,empty_label="اختر اسم المادة",)
 
 
 

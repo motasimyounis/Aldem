@@ -5,8 +5,9 @@
 
 {% if user.is_paid %}
 
-<section class="playlist-details" style="direction: rtl;">
 
+{% if  lists.videos.count != 0 %}
+<section class="playlist-details" style="direction: rtl;">
 
    <h1 class="heading">تفاصيل قائمة التشغيل</h1>
 
@@ -27,14 +28,12 @@
    
          <div class="details">
             <h3>{{lists.name}}</h3>
-                    <p>نرحب بكم في مقاطع شرح مادة {{lists.name}} <br>  مع العلم أن الاشتراك بالشروحات ينتهي بإنتهاء الاختبارات النهائية <br> مع تمنياتي لكم بالتوفيق والنجاح</p>
-
+            <p>نرحب بكم في مقاطع شرح مادة {{lists.name}} <br>  مع العلم أن الاشتراك بالشروحات ينتهي بإنتهاء الاختبارات النهائية <br> مع تمنياتي لكم بالتوفيق والنجاح</p>
          </div>
       </div>
    </div>
 
 </section>
-{% endif %}
 
 
 <section class="playlist-videos" style="direction: rtl;">
@@ -55,8 +54,53 @@
          </a>
          {% endfor %}
    </div>
-
+   
 </section>
+
+
+
+
+{% else %}
+
+<section class="watch-video" style="direction: rtl;">
+
+   <div class="video-container" style="position: relative;">
+   <h1 class="heading">تنويه هام</h1>
+
+   <p class="description">
+       ما أحلل اشتراك الأستاذات أو الأساتذة بالشروحات أو تصوير الملفات أو تصويرهم بأي شكل من الأشكال أو ما شابه للتربح منها أو مشاركتها مجاناً. <br> مع تحيات الأستاذة الدمرداش.
+
+     </p>
+     <br>
+     <br>
+{% if pdf_url %}
+<h1 class="heading">الملف الخاص بالمادة</h1>
+   
+  <iframe 
+   src="{{pdf_url}}/preview"
+   id="pdfViewer"
+   width="100%" 
+   height="600px"></iframe>
+
+{% else %}
+<br>
+<br>
+<h2>
+   لا يوجد ملف
+</h2>
+{% endif %}
+</div>
+</section>
+
+   
+</section>
+
+{% endif %}
+
+{% endif %}
+
+
+
 
 {% if messages %}
 <div id="django-messages" style="display: none;">

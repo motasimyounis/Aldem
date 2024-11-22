@@ -7,23 +7,24 @@
    <div class="box-container"> 
 
       
-       {% for subject in subjects %}
+      
       <div class="box">
          <div class="thumb">
-         {% if subject.thumbnail %}
-            <img src="{{ subject.thumbnail.url }}" alt="">
+         {% if subjects.thumbnail %}
+            <img src="{{ subjects.thumbnail.url }}" alt="">
          {% else %}
             <img src="{% static 'assets/img/head-img-services/main.jpg' %}" alt="Default Image">
          {% endif %}
-
+         
+            
          </div>
         
-         <h3 class="title">{{ subject }}</h3>
+         <h3 class="title">{{ subjects }}</h3>
      
-         <a href=" {% url 'playlist' subject.id %} " class="inline-btn">مشاهدة المحتوى</a> 
+         <a href=" {% url 'playlist' subjects.id %} " class="inline-btn">مشاهدة المحتوى</a> 
       </div>
      
-   {% endfor %}
+  
 
    </div>
    
