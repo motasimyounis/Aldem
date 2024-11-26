@@ -108,6 +108,16 @@ admin.site.register(User, CustomUserAdmin)
 
 
 
-admin.site.register(Profile)
+
+class ProfileAdmin(admin.ModelAdmin):
+    list_display= ('user','device_id')
+    list_editable= ['device_id']
+    search_fields = ['user__username']
+    list_filter = ['user__email','user__username']
+
+
+
+
+admin.site.register(Profile,ProfileAdmin)
 
 
