@@ -19,15 +19,15 @@
          {% if lists.thumbnail %}
             <img src="{{ lists.thumbnail.url }}" alt="">
          {% else %}
-         <img src="{% static 'assets/img/head-img-services/main.jpg' %}" alt="Default Image">
+         <img src="{% static 'assets/img/head-img-services/lecture.jpg' %}" alt="Default Image">
          {% endif %}
-            <span>{{ lists.videos.count }} مقاطع</span>
+            <span style="font-weight: bolder;">{{ lists.videos.count }} محاضرة</span>
          </div>
       </div>
       <div class="column">
    
          <div class="details">
-            <h3>{{lists.name}}</h3>
+            <h3>{{lists.name}} (  <span style="color: red;">{{ lists.videos.count }} محاضرة </span>)</h3>
             <p>نرحب بكم في مقاطع شرح مادة {{lists.name}} <br>  مع العلم أن الاشتراك بالشروحات ينتهي بإنتهاء الاختبارات النهائية <br> مع تمنياتي لكم بالتوفيق والنجاح</p>
          </div>
       </div>
@@ -48,7 +48,7 @@
             {% if video.thumbnail.url != None %}
             <img src="{{ video.thumbnail.url }}" alt="">
             {% else %}
-            <img src="{% static 'assets/img/head-img-services/main.jpg' %}" alt="غلاف">
+            <img src="{% static 'assets/img/head-img-services/lecture.jpg' %}" alt="غلاف">
              {% endif %}
             <h3>{{ video.title }}</h3>
          </a>

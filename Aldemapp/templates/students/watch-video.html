@@ -178,46 +178,6 @@
 </script>
 
 
-<script>
-    let iframeFocused = false;
-
-    // Detect when the iframe is clicked or focused (mouse enters the iframe)
-    document.getElementById('video').addEventListener('mouseenter', function() {
-        iframeFocused = true;
-    });
-
-    // Detect when the mouse leaves the iframe (interaction with the iframe ends)
-    document.getElementById('video').addEventListener('mouseleave', function() {
-        iframeFocused = false;
-    });
-
-    // Function to blur the content when the page/tab is left
-    function handlePageLeave() {
-        if (!iframeFocused) {
-            document.body.style.filter = "blur(50px)";
-        }
-    }
-
-    // Detect when the user switches to another tab or window (blur the page)
-    window.onblur = handlePageLeave;
-
-    // Detect when the mouse leaves the browser window (mouseleave event)
-    document.addEventListener('mouseleave', handlePageLeave);
-
-    // Restore the content when the window/tab regains focus (user returns to the tab)
-    window.onfocus = function() {
-        document.body.style.filter = "none";
-    };
-
-    // Restore content when mouse re-enters the window
-    document.addEventListener('mouseenter', function() {
-        document.body.style.filter = "none";
-    });
-
-
-
-</script>
-
 
 {% comment %} 
 <script>
