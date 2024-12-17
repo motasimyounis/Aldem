@@ -1,0 +1,117 @@
+{% extends "students/base-s.html" %}
+{% block content %}
+{% load static %}
+
+<section class="notifications" style="direction: rtl; text-align: center;">
+    <h1 class="heading">الإشعارات</h1>
+    <br>    
+    <div class="notifications-container">
+ 
+        {% if notifications %}
+            <ul>
+                {% for notification in notifications %}
+                    <li>
+                        <div class="notification-card {% if not notification.is_read %}unread{% endif %}">
+                            <div class="notification-content">
+                                <p>{{ notification.message }}</p>
+                                <small>الوقت : {{ notification.created_at|date:"Y-m-d H:i" }}</small>
+                            </div>
+                            {% if not notification.is_read %}
+                                <a class="mark-read-btn" href="{% url 'mark_as_read' notification.id %}">تعليم كمقروء</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                    <br>
+                    <br>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-notifications">لا توجد إشعارات جديدة.</p>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        {% endif %}
+ 
+    </div>
+ </section>
+ 
+<style>
+.notifications {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.notifications-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.notification-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+    padding: 15px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: right;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.notification-card.unread {
+    border-left: 5px solid #ff5722;
+    background: #fef7f5;
+}
+
+.notification-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.notification-content p {
+    margin: 0;
+    font-size: 16px;
+    color: #444;
+}
+
+.notification-content small {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #777;
+}
+
+.mark-read-btn {
+    position: absolute;
+    top: -14px;
+    left: -5px;
+    font-size: 14px;
+    color: #fff;
+    background: #28a745;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.mark-read-btn:hover {
+    background: #218838;
+}
+
+.no-notifications {
+    font-size: 18px;
+    color: #666;
+    margin-top: 20px;
+}
+
+</style>
+
+{% endblock content %}
+
