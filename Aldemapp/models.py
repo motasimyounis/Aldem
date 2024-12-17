@@ -93,3 +93,27 @@ class Profile(models.Model):
     class Meta:
         verbose_name = "معرف المستخدم"
         verbose_name_plural ="معرفات المستخدمين"
+
+
+
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications', null=True, blank=True)
+    message = models.TextField()
+    is_read = models.BooleanField(default=False,verbose_name='مقروء من الطالب')
+    is_for_all = models.BooleanField(default=False,verbose_name='إرسال لكل الطلاب')  # تحديد إذا كان الإشعار لجميع المستخدمين
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+    class Meta:
+        verbose_name = "إشعار"
+        verbose_name_plural ="الإشعارات"
+
+
+    def __str__(self):
+        if self.is_for_all:
+            return f"Notification for all users: {self.message[:30]}"
+        return f"Notification for {self.user.username}: {self.message[:30]}"
+    
+
