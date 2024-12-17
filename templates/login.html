@@ -62,14 +62,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="two">
 
                               <a href="{% url 'password_reset' %}"><label>هل نسيت كلمة المرور؟</label></a></span>
-                              <br>
-                              {% if messages %}
-                              <div class="alert alert-info" role="alert">
-                                  {% for message in messages %}
-                                  <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</li>
-                                  {% endfor %}
-                              </div>
-                              {% endif %}
                             </div>
                         </div>
 
