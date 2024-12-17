@@ -289,3 +289,28 @@ def pakages(request):
        
     }
     return render(request,'pakages.html',context)
+
+
+
+
+@login_required
+def notification(request):
+    user = request.user
+    notifications = Notification.objects.filter(user=user).order_by('-created_at')
+    unread_count = notifications.filter(is_read=False).count()  # حساب عدد الإشعارات غير المقروءة
+
+    context = {
+        'notifications': notifications,
+        'unread_count': unread_count,  # إضافة العدد إلى السياق
+    }
+    return render(request, 'students/notification.html', context)
+
+@login_required
+def mark_as_read(request, notification_id):
+    notification = get_object_or_404(Notification, id=notification_id, user=request.user)
+    notification.is_read = True
+    notification.save()
+    return redirect('notification')
+
+
+
