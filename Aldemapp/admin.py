@@ -136,37 +136,35 @@ class NotificationAdmin(admin.ModelAdmin):
     list_display = ('short_message', 'user', 'is_for_all', 'is_read', 'created_at')
     list_filter = ('is_for_all', 'is_read', 'created_at')
     search_fields = ('message', 'user__email')
-    readonly_fields = ('is_read',)  # إضافة is_read للحقل القابل للقراءة فقط
+    readonly_fields = ('is_read',)
 
-
-    # طريقة لعرض أول 20 كلمة من الرسالة باستخدام Truncator
     def short_message(self, obj):
         truncator = Truncator(obj.message)
-        return truncator.chars(50, truncate='...')  # تقطيع النص إلى 100 حرف فقط مع إضافة "..."
+        return truncator.chars(50, truncate='...')
 
-    short_message.admin_order_field = 'message'  # لجعل الترتيب بناءً على الرسالة الأصلية
-    short_message.short_description = 'Message'  # تغيير عنوان العمود في الجدولMessage'  # تغيير عنوان العمود في الجدول
-
+    short_message.admin_order_field = 'message'
+    short_message.short_description = 'Message'
 
     def save_model(self, request, obj, form, change):
-        if obj.is_for_all:  # إذا كان الإشعار لجميع المستخدمين
-            # إرسال الإشعارات عبر البريد الإلكتروني لجميع المستخدمين
-            self.notify_all_users_with_email(obj.message)
-            # إضافة الإشعارات لجميع المستخدمين
-            users = User.objects.exclude(email__isnull=True).exclude(email__exact='')
-            notifications = [
-                Notification(user=user, message=obj.message, is_for_all=True) for user in users
-            ]
-            Notification.objects.bulk_create(notifications)
-        else:  # إشعار فردي
+        if obj.is_for_all:
+            # إنشاء الإشعارات لجميع المستخدمين
+            self.create_notifications_for_all_users(obj.message)
+        else:
             super().save_model(request, obj, form, change)
-            # إذا كان المستخدم لديه بريد إلكتروني صالح، أرسل إشعارًا بالبريد
             if obj.user and obj.user.email:
                 self.notify_user_with_email(obj.user.email, obj.message)
 
-    def notify_all_users_with_email(self, message):
+    def create_notifications_for_all_users(self, message):
+        """إنشاء الإشعارات وإرسال البريد لجميع المستخدمين"""
         users = User.objects.exclude(email__isnull=True).exclude(email__exact='')
 
+        # إنشاء الإشعارات في قاعدة البيانات
+        notifications = [
+            Notification(user=user, message=message, is_for_all=True) for user in users
+        ]
+        Notification.objects.bulk_create(notifications)  # إنشاء السجلات دفعة واحدة
+
+        # إعداد رسائل البريد الإلكتروني
         email_messages = [
             ('إشعار جديد من منصة الأستاذة الدمرداش', message, settings.DEFAULT_FROM_EMAIL, [user.email]) for user in users
         ]
@@ -174,22 +172,23 @@ class NotificationAdmin(admin.ModelAdmin):
         try:
             if email_messages:
                 send_mass_mail(email_messages, fail_silently=False)
-                print("Emails sent successfully.")  # رسالة تأكيد عند الإرسال
+                print(f"Emails sent successfully to {len(users)} users.")
         except Exception as e:
             logger.error(f"Error sending email notifications: {str(e)}")
-            print(f"Error: {e}")  # طباعة الخطأ للتشخيص
+            print(f"Error: {e}")
 
     def notify_user_with_email(self, email, message):
-        """إرسال إشعار بالبريد الإلكتروني لمستخدم فردي."""
+        """إرسال إشعار بالبريد الإلكتروني لمستخدم فردي"""
         try:
             send_mail(
-                'إشعار جديد من منصة الأستاذة الدمرداش',  # عنوان البريد
-                message,  # محتوى البريد
-                settings.DEFAULT_FROM_EMAIL,  # المرسل
-                [email],  # المستقبل
+                'إشعار جديد من منصة الأستاذة الدمرداش',
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
                 fail_silently=False
             )
-            print(f"Email sent successfully to {email}.")  # تأكيد نجاح الإرسال
+            print(f"Email sent successfully to {email}.")
         except Exception as e:
             logger.error(f"Error sending email to {email}: {str(e)}")
-            print(f"Error sending email to {email}: {e}")  # طباعة الخطأ
+            print(f"Error sending email to {email}: {e}")
+
