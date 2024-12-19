@@ -6,11 +6,16 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from markdownx.widgets import MarkdownxWidget
+from django.core.mail import send_mass_mail
+from django.conf import settings
 from django.core.mail import send_mail, send_mass_mail
 from django.core.exceptions import ValidationError
 from django.utils.text import Truncator
-from django.core.mail import send_mass_mail
-from django.conf import settings
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 
 User = get_user_model()
 
@@ -144,47 +149,47 @@ class NotificationAdmin(admin.ModelAdmin):
 
 
     def save_model(self, request, obj, form, change):
-        # تحقق من أن أحد الخيارين تم تحديده
-        if not obj.user and not obj.is_for_all:
-            raise ValidationError("يجب تحديد إما طالب أو تحديد إشعار لجميع الطلاب.")
-        
         if obj.is_for_all:  # إذا كان الإشعار لجميع المستخدمين
+            # إرسال الإشعارات عبر البريد الإلكتروني لجميع المستخدمين
             self.notify_all_users_with_email(obj.message)
+            # إضافة الإشعارات لجميع المستخدمين
+            users = User.objects.exclude(email__isnull=True).exclude(email__exact='')
+            notifications = [
+                Notification(user=user, message=obj.message, is_for_all=True) for user in users
+            ]
+            Notification.objects.bulk_create(notifications)
         else:  # إشعار فردي
             super().save_model(request, obj, form, change)
-            if obj.user:  # إذا كان هناك مستخدم محدد
-                self.send_email_to_user(obj.user, obj.message)  # إرسال الإشعار بالبريد الإلكتروني
-
-
-    def notify_all_users(self, message):
-        users = User.objects.all()
-        notifications = [
-            Notification(user=user, message=message) for user in users
-        ]
-        Notification.objects.bulk_create(notifications)
+            # إذا كان المستخدم لديه بريد إلكتروني صالح، أرسل إشعارًا بالبريد
+            if obj.user and obj.user.email:
+                self.notify_user_with_email(obj.user.email, obj.message)
 
     def notify_all_users_with_email(self, message):
-        users = User.objects.exclude(email__isnull=True).exclude(email__exact='')  # فقط المستخدمين الذين لديهم بريد إلكتروني
-        # إنشاء الإشعارات
-        notifications = [
-            Notification(user=user, message=message) for user in users
-        ]
-        Notification.objects.bulk_create(notifications)
+        users = User.objects.exclude(email__isnull=True).exclude(email__exact='')
 
-        # إرسال البريد الإلكتروني
         email_messages = [
             ('إشعار جديد من منصة الأستاذة الدمرداش', message, settings.DEFAULT_FROM_EMAIL, [user.email]) for user in users
         ]
-        send_mass_mail(email_messages, fail_silently=False)
 
-    def send_email_to_user(self, user, message):
-        if user.email:  # تأكد أن المستخدم لديه بريد إلكتروني
+        try:
+            if email_messages:
+                send_mass_mail(email_messages, fail_silently=False)
+                print("Emails sent successfully.")  # رسالة تأكيد عند الإرسال
+        except Exception as e:
+            logger.error(f"Error sending email notifications: {str(e)}")
+            print(f"Error: {e}")  # طباعة الخطأ للتشخيص
+
+    def notify_user_with_email(self, email, message):
+        """إرسال إشعار بالبريد الإلكتروني لمستخدم فردي."""
+        try:
             send_mail(
-                subject='إشعار جديد  من منصة الأستاذة الدمرداش',
-                message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[user.email],
-                fail_silently=False,  # اجعلها True لتجنب كسر العملية عند حدوث خطأ
+                'إشعار جديد من منصة الأستاذة الدمرداش',  # عنوان البريد
+                message,  # محتوى البريد
+                settings.DEFAULT_FROM_EMAIL,  # المرسل
+                [email],  # المستقبل
+                fail_silently=False
             )
-
-
+            print(f"Email sent successfully to {email}.")  # تأكيد نجاح الإرسال
+        except Exception as e:
+            logger.error(f"Error sending email to {email}: {str(e)}")
+            print(f"Error sending email to {email}: {e}")  # طباعة الخطأ
