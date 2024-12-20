@@ -145,50 +145,51 @@ class NotificationAdmin(admin.ModelAdmin):
     short_message.admin_order_field = 'message'
     short_message.short_description = 'Message'
 
+    
+
+    
+
     def save_model(self, request, obj, form, change):
-        if obj.is_for_all:
-            # إنشاء الإشعارات لجميع المستخدمين
-            self.create_notifications_for_all_users(obj.message)
-        else:
-            super().save_model(request, obj, form, change)
-            if obj.user and obj.user.email:
-                self.notify_user_with_email(obj.user.email, obj.message)
+        if obj.is_for_all:  # إذا كان الإشعار موجهًا للجميع
+            if obj.method == 'email':  # إذا تم اختيار الإرسال عبر البريد الإلكتروني
+                self.create_notifications_via_email(obj.message)  # فقط إرسال البريد
+            elif obj.method == 'site':  # إذا تم اختيار الإرسال عبر الموقع
+                self.create_notifications_via_site(obj.message)  # فقط إنشاء الإشعارات في الموقع
+        else:  # إذا كان الإشعار لمستخدم واحد
+            if obj.method == 'email':  # إذا كان الإرسال بالبريد فقط
+                if obj.user and obj.user.email:
+                    self.notify_user_with_email(obj.user.email, obj.message)  # إرسال بريد إلكتروني
+            elif obj.method == 'site':  # إذا كان الإرسال عبر الموقع فقط
+                super().save_model(request, obj, form, change)  # حفظ الإشعار في قاعدة البيانات
 
-    def create_notifications_for_all_users(self, message):
-        """إنشاء الإشعارات وإرسال البريد لجميع المستخدمين"""
+
+    def create_notifications_via_email(self, message):
         users = User.objects.exclude(email__isnull=True).exclude(email__exact='')
-
-        # إنشاء الإشعارات في قاعدة البيانات
-        notifications = [
-            Notification(user=user, message=message, is_for_all=True) for user in users
-        ]
-        Notification.objects.bulk_create(notifications)  # إنشاء السجلات دفعة واحدة
-
-        # إعداد رسائل البريد الإلكتروني
         email_messages = [
             ('إشعار جديد من منصة الأستاذة الدمرداش', message, settings.DEFAULT_FROM_EMAIL, [user.email]) for user in users
         ]
+        send_mass_mail(email_messages, fail_silently=False)
+        print(f"Emails sent successfully to {len(users)} users.")
 
-        try:
-            if email_messages:
-                send_mass_mail(email_messages, fail_silently=False)
-                print(f"Emails sent successfully to {len(users)} users.")
-        except Exception as e:
-            logger.error(f"Error sending email notifications: {str(e)}")
-            print(f"Error: {e}")
+    def create_notifications_via_site(self, message):
+        users = User.objects.all()
+        notifications = [
+            Notification(user=user, message=message, is_for_all=True, method='site') for user in users
+        ]
+        Notification.objects.bulk_create(notifications)
+        print(f"Site notifications created successfully for {len(users)} users.")
 
     def notify_user_with_email(self, email, message):
-        """إرسال إشعار بالبريد الإلكتروني لمستخدم فردي"""
-        try:
-            send_mail(
-                'إشعار جديد من منصة الأستاذة الدمرداش',
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                [email],
-                fail_silently=False
-            )
-            print(f"Email sent successfully to {email}.")
-        except Exception as e:
-            logger.error(f"Error sending email to {email}: {str(e)}")
-            print(f"Error sending email to {email}: {e}")
+        send_mail(
+            'إشعار جديد من منصة الأستاذة الدمرداش',
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [email],
+            fail_silently=False
+        )
+        print(f"Email sent successfully to {email}.")
+
+    def create_notification_for_user(self, user, message):
+        Notification.objects.create(user=user, message=message, method='site')
+        print(f"Site notification created for {user.username}.")
 
