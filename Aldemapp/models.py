@@ -100,15 +100,14 @@ class Profile(models.Model):
 
 class Notification(models.Model):
     MESSAGE_TYPE_CHOICES = [
-        ('email', 'Send via Email'),
-        ('site', 'Send via Site'),
+        ('email' , 'الارسال الى الإيميل'),
+        ('site', 'الارسال الى المنصة'),
     ]
 
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications', null=True, blank=True)
     message = models.TextField()
-    method = models.CharField(max_length=10, choices=MESSAGE_TYPE_CHOICES, default='site')  # تحديد طريقة الإرسال
-
+    method = models.CharField(max_length=10, choices=MESSAGE_TYPE_CHOICES, default='site',verbose_name='طريقة الإرسال')
     is_read = models.BooleanField(default=False,verbose_name='مقروء من الطالب')
     is_for_all = models.BooleanField(default=False,verbose_name='إرسال لكل الطلاب')  # تحديد إذا كان الإشعار لجميع المستخدمين
     created_at = models.DateTimeField(auto_now_add=True)
