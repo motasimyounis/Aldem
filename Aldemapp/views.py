@@ -173,7 +173,7 @@ def custom_login(request):
                             new_device_id,
                             max_age=365*24*60*60,  # 1 year expiration
                             httponly=True,  # Prevent JavaScript access
-                            secure=False,  # Set to True for HTTPS
+                            secure=True,  # Set to True for HTTPS
                             samesite='Lax',
                             path='/'
                         )
@@ -199,17 +199,19 @@ def custom_login(request):
 
 
 
-
 @login_required
 def home_student(request):
     user = request.user
     user = User.objects.get(username=user.username)
+    chapters = user.chapters.all()
+    chp= Chapter.objects.all()
     subjects = user.subjects
     sub = Subject.objects.all()
     context = {
         'sub' : sub,
         'user': user,
-        'subjects': subjects
+        'subjects': subjects,
+        'chapters':chapters,
     }
     return render(request,'students/home.html',context)
 
@@ -241,23 +243,43 @@ def contact(request):
 
 
 
+
+@login_required
+def chapter(request,chapter_id):
+    lists = get_object_or_404(Chapter, id=chapter_id)
+    user = request.user
+    subjects = user.subjects
+    chapter = user.chapters.all()
+    context = {
+        'lists' : lists,
+        'subjects': subjects,
+        'chapter':chapter
+
+    }
+   
+    return render(request,'students/chapter.html',context)
+
+
+
+
 @login_required
 def playlist(request,list_id):
-    lists = get_object_or_404(Subject, id=list_id)
-        # Check if the user is authenticated and assign the PDF URL
+    lists = get_object_or_404(Chapter, id=list_id)
+    videos = lists.video.all()  # Get all videos related to this chapter
+
+
     if request.user.is_authenticated:
-        pdf_url = lists.pdf if lists.pdf else None  # Use the `pdf` field directly as it's a CharField
-        print(pdf_url)
+        pdf_url = lists.subject.pdf if lists.subject.pdf else None  # Use the `pdf` field directly as it's a CharField
     else:
         pdf_url = None  # No PDF URL for unauthenticated users
 
     context = {
         'lists' : lists,
         'pdf_url': pdf_url,
+        'videos': videos
     }
    
     return render(request,'students/playlist.html',context)
-
 
 
 def paid(request):
