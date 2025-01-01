@@ -25,6 +25,7 @@ urlpatterns = [
     path('contact', views.contact ,name='contact'),
     path('change_password/',views.change_password, name='change_password'),
     path('playlists/<int:list_id>/', views.playlist ,name='playlist'),
+    path('chapters/<int:chapter_id>/', views.chapter ,name='chapter'),
     path('watch/<int:video_id>', views.watch ,name='watch_video'),
     path('paid', views.paid ,name='paid'),
     path('notification', views.notification ,name='notification'),
