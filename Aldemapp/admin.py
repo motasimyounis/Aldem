@@ -37,8 +37,8 @@ admin.site.site_header = 'ALDEMERDASH'
 
 
 class VideosAdmin(admin.ModelAdmin):
-    list_display= ('subject','title','order',)
-    list_editable= ['order']
+    list_display= ('subject','title','order','chapter')
+    list_editable= ('order','chapter')
     search_fields = ['subject__name', 'title']
     list_filter = ('subject','title')
 
