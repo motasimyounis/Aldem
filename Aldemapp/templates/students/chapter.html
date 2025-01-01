@@ -1,0 +1,27 @@
+{% extends "students/base-s.html" %}
+{% block content %}
+{% load static %}
+
+<section class="courses" style="direction: rtl;">
+   <h1 class="heading">الفصول</h1>
+   <div class="box-container"> 
+
+      {% for ch in chapter %} 
+      
+      <div class="box">
+         <div class="thumb">
+            <img style="height: 300px;" src="{% static 'assets/img/head-img-services/book.jpg' %}" alt="Default Image">         
+         </div>
+        
+         <h3 class="title">{{ ch }}</h3>
+     
+         <a href=" {% url 'playlist' ch.id %} " class="inline-btn">مشاهدة المحتوى</a> 
+      </div>
+     
+      {% endfor %}
+
+   </div>
+   
+  
+</section>
+{% endblock content %}

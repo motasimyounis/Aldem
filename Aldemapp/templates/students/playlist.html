@@ -6,7 +6,7 @@
 {% if user.is_paid %}
 
 
-{% if  lists.videos.count != 0 %}
+{% if  lists.subject.videos.count != 0 %}
 <section class="playlist-details" style="direction: rtl;">
 
    <h1 class="heading">تفاصيل قائمة التشغيل</h1>
@@ -21,14 +21,14 @@
          {% else %}
          <img src="{% static 'assets/img/head-img-services/lecture.jpg' %}" alt="Default Image">
          {% endif %}
-            <span style="font-weight: bolder;">{{ lists.videos.count }} محاضرة</span>
+            <span style="font-weight: bolder;">{{ videos.count }} محاضرة</span>
          </div>
       </div>
       <div class="column">
    
          <div class="details">
-            <h3>{{lists.name}} (  <span style="color: red;">{{ lists.videos.count }} محاضرة </span>)</h3>
-            <p>نرحب بكم في مقاطع شرح مادة {{lists.name}} <br>  مع العلم أن الاشتراك بالشروحات ينتهي بإنتهاء الاختبارات النهائية <br> مع تمنياتي لكم بالتوفيق والنجاح</p>
+            <h3>{{lists.name}} - {{lists.subject.name}} (  <span style="color: red;">{{ videos.count }} محاضرة </span>)</h3>
+            <p>نرحب بكم في مقاطع شرح  {{lists.name}} - {{lists.subject.name}} <br>  مع العلم أن الاشتراك بالشروحات ينتهي بإنتهاء الاختبارات النهائية <br> مع تمنياتي لكم بالتوفيق والنجاح</p>
          </div>
       </div>
    </div>
@@ -41,7 +41,7 @@
    <h1 class="heading">المحاضرات</h1>
 
    <div class="box-container">
-      {% for video in lists.videos.all %} 
+      {% for video in videos   %} 
          <a class="box" href="{% url 'watch_video' video.id %}">
             <i class="fas fa-play"></i>
          
