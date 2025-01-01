@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser,User,Subject
+from django.contrib.auth.models import AbstractUser,User,Subject,Chapter
 from django.dispatch import receiver
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
@@ -10,6 +10,7 @@ from django.urls import reverse
 
 class Videos(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='videos')
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE,null=True, blank=True,related_name='video',default='')
     title = models.CharField(_("عنوان الفيديو"),max_length=255)
     video_file = models.FileField(_("الفيديو"),max_length=355,blank=True,null=True,upload_to='videos/')
     thumbnail = models.ImageField(_("غلاف المقطع"),max_length=255,upload_to='thumbnails/', blank=True, null=True)
