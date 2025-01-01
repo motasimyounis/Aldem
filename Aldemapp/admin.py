@@ -130,6 +130,10 @@ class ProfileAdmin(admin.ModelAdmin):
 admin.site.register(Profile,ProfileAdmin)
 
 
+admin.site.register(Chapter)
+
+
+
 
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
