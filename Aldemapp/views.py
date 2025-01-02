@@ -246,17 +246,12 @@ def contact(request):
 
 @login_required
 def chapter(request,chapter_id):
-    lists = get_object_or_404(Chapter, id=chapter_id)
-    user = request.user
-    subjects = user.subjects
-    chapter = user.chapters.all()
+    subject = get_object_or_404(Subject, id=chapter_id)
+    chapter = request.user.chapters.filter(subject=subject)
     context = {
-        'lists' : lists,
-        'subjects': subjects,
-        'chapter':chapter
-
-    }
-   
+        'subject': subject,
+        'chapter': chapter,
+    } 
     return render(request,'students/chapter.html',context)
 
 
