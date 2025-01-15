@@ -1,42 +1,231 @@
-{% extends 'base-ar.html' %}
 {% load static %}
 {% block content %}
 {% load crispy_forms_tags %}
 
-<section id="hero-animated" class="hero-animated d-flex align-items-center">
-    <div class="overlay" id="particles-js"></div>
-    <div class="container d-flex justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
-        <div class="wrapper">
-            <div class="form-box">
-                <div class="login-container" id="login">
-                    <div class="top">
-                        <header>سعدنا باشتراكك معنا </header>
-                        <header>سوف تصلك رسالة على إيميلك للحصول على كود خصم مميز خاص بك عند الدفع</header>
-                    </div>
-                 
-                        
-                        <br>
-                        
-                            <a class="nav-button" href="https://mail.google.com/mail/u/0/"><button class="btn white-btn">الذهاب الى إيميلك</button></a>
-                        
-                        <br>
-                        
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>أ . الدمرداش | منصة تعليمية رائدة</title>
+    <meta content="الأستاذة الدمرداش متميزة في مجال التعليم العالي مختصة في تدريس مواد مختلفة بكفاءة وجودة عالية ومختصة بطلاب الجامعات" name="description">  
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/logo/logo (2).png' %}" rel="icon">
 
-            {% if messages %}
-            <div class="alert alert-info" role="alert">
-                {% for message in messages %}
-                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message.message }}</li>
-                {% endfor %}
-            </div>
-            {% endif %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
 
+        /* فيديو الخلفية */
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* الحفاظ على نسبة العرض إلى الارتفاع */
+            z-index: -1;
+        }
 
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            font-size: 2.5em;
+            font-weight: bold;
+            border-bottom: 3px solid red;
+            position: relative;
+            z-index: 1;
+        }
 
-                </div>
-            </div>
+        .celebration-container {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .message {
+            text-align: center;
+            color: #333;
+            font-size: 1.7em;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px 50px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            animation: pop 1s ease-out forwards;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+            padding: 15px 30px;
+            background-color: #f0630b;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .buttons a:hover {
+            background-color: #2B454E;
+            transform: scale(1.1);
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        footer {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            text-align: center;
+            padding: 15px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            font-size: 1.2em;
+            border-top: 3px solid #ffd700;
+            z-index: 1;
+        }
+
+        /* طبقة التغطية */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.99); /* خلفية شبه شفافة */
+            z-index: 9999; /* تأكد من ظهورها فوق كل شيء */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* زر تشغيل الصوت */
+        #audio-control {
+            background-color: #f0630b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- فيديو الخلفية -->
+    <video id="background-video" autoplay loop muted>
+        <source src="{% static 'assets/videos/background.mp4' %}" type="video/mp4">
+        متصفحك لا يدعم تشغيل الفيديو.
+    </video>
+
+    <!-- مقطع الصوت -->
+    <audio id="background-audio">
+        <source src="{% static 'assets/audio/aldem.ogg' %}" type="audio/mpeg">
+        متصفحك لا يدعم تشغيل الصوت.
+    </audio>
+
+    <!-- طبقة التغطية وزر التشغيل -->
+    <div id="overlay">
+        <button id="audio-control">تشغيل الصوت</button>
+    </div>
+
+    <header>
+        تهانينا! تم التسجيل بنجاح 🎉
+    </header>
+
+    {% if messages %}
+    <div id="django-messages" style="display: none;">
+        {% for message in messages %}
+            <span class="message" data-tags="{{ message.tags }}">{{ message }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var messages = document.querySelectorAll('#django-messages .message');
+            if (messages.length > 0) {
+                messages.forEach(function(message) {
+                    alert(message.textContent);
+                });
+            }
+
+            // التحكم في الصوت
+            var audio = document.getElementById('background-audio');
+            var overlay = document.getElementById('overlay');
+            var audioControl = document.getElementById('audio-control');
+
+            // محاولة تشغيل الصوت تلقائيًا
+            audio.play()
+                .then(function() {
+                    console.log("تم تشغيل الصوت تلقائيًا.");
+                    overlay.style.display = 'none'; // إخفاء الطبقة إذا تم التشغيل بنجاح
+                })
+                .catch(function(error) {
+                    console.error("تعذر التشغيل التلقائي للصوت:", error);
+                    // إظهار الطبقة وزر التشغيل إذا فشل التشغيل التلقائي
+                });
+
+            // تشغيل الصوت يدويًا عند النقر على الزر
+            audioControl.addEventListener('click', function() {
+                audio.play()
+                    .then(function() {
+                        overlay.style.display = 'none'; // إخفاء الطبقة بعد التشغيل
+                    })
+                    .catch(function(error) {
+                        console.error("تعذر تشغيل الصوت:", error);
+                        alert("تعذر تشغيل الصوت. يرجى المحاولة مرة أخرى.");
+                    });
+            });
+        });
+    </script>
+    
+
+    <div class="celebration-container">
+        <div class="message">
+             ❤️شكراً لانضمامك إلينا ! نحن سعداء بوجودك <br>
+             راجع إيميلك الأن وأكمل اجراءات الدفع الخاصة بك
+             <br>
+            .لتسطيع الدخول الى المنصة والتمتع بجميع الخدمات المتاحة لك
         </div>
+
+        <div class="buttons">
+            <a href="https://mail.google.com/mail/u/0">اذهب الى إيميلك الآن</a>
+            <a href="/">الرجوع الى المنصة</a>
         </div>
     </div>
-</section>
+
+</body>
+</html>
 
 {% endblock content %}
