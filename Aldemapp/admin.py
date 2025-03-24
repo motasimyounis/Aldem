@@ -23,6 +23,8 @@ User = get_user_model()
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
+#admin.site.unregister(User)
+#admin.site.unregister(Group)
 
 
 
